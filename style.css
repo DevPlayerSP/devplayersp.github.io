@@ -13,6 +13,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
+  position: relative;
   min-height: 100vh;
   font-family: var(--font-body);
   color: var(--neutral);
@@ -29,23 +30,45 @@ body {
 }
 
 .container {
+  position: relative;
   max-width: 600px;
   margin: 0 auto;
-  padding: 24px 16px 32px;
+  padding: 0 16px 32px;
   display: flex;
   flex-direction: column;
   gap: 28px;
 }
 
-/* Hero */
-.hero { text-align: center; }
-.banner {
+/* Capa (ponte estaiada) + logo */
+.cover {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(100%, 820px);
+  height: 300px;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+  background: url("assets/cover.jpg") center 62% / cover no-repeat;
+  z-index: -1;
+}
+.cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(17, 17, 22, .35) 0%, rgba(17, 17, 22, .55) 55%, var(--bg) 100%);
+}
+.hero { text-align: center; padding-top: 150px; }
+@media (max-width: 700px) {
+  .cover { -webkit-mask-image: none; mask-image: none; }
+}
+.logo {
   display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 16px;
-  border: 1px solid rgba(240, 0, 131, .35);
-  box-shadow: 0 12px 40px -12px rgba(240, 0, 131, .45);
+  width: 132px;
+  height: 132px;
+  margin: 0 auto;
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px var(--bg), 0 10px 40px -8px rgba(240, 0, 131, .7);
 }
 .tagline {
   margin-top: 18px;
@@ -150,20 +173,22 @@ footer { text-align: center; color: var(--muted); font-size: .8rem; }
 
 /* ===== Animações ===== */
 
-/* Entrada: banner e tagline descem, botões entram um após o outro */
+/* Entrada: logo e tagline descem, botões entram um após o outro */
 @keyframes rise {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: none; }
 }
-.banner  { animation: rise .6s ease-out both, glow 4s ease-in-out .6s infinite; }
+.cover   { animation: fade 1s ease-out both; }
+.logo    { animation: rise .6s ease-out both, glow 4s ease-in-out .6s infinite; }
+@keyframes fade { from { opacity: 0; } }
 .tagline { animation: rise .6s ease-out .15s both; }
 .link    { animation: rise .5s ease-out backwards; animation-delay: calc(.25s + var(--i, 0) * .08s); }
 .ads, footer { animation: rise .5s ease-out .8s both; }
 
-/* Brilho neon "respirando" no banner */
+/* Brilho neon "respirando" no logo */
 @keyframes glow {
-  0%, 100% { box-shadow: 0 12px 40px -12px rgba(240, 0, 131, .45); }
-  50%      { box-shadow: 0 12px 56px -8px rgba(240, 0, 131, .75), 0 0 24px -6px rgba(113, 56, 200, .6); }
+  0%, 100% { box-shadow: 0 0 0 3px var(--bg), 0 10px 40px -8px rgba(240, 0, 131, .6); }
+  50%      { box-shadow: 0 0 0 3px var(--bg), 0 10px 60px -2px rgba(240, 0, 131, .9), 0 0 30px 0 rgba(113, 56, 200, .5); }
 }
 
 /* Barras "/" da tagline piscando em sequência */
