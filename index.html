@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DevPlayerSP</title>
+  <meta name="description" content="Todos os canais do DevPlayerSP: YouTube, Twitch, TikTok, Instagram e Threads.">
+  <meta property="og:title" content="DevPlayerSP">
+  <meta property="og:description" content="Todos os canais do DevPlayerSP em um só lugar.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <header class="profile">
+      <!-- Coloque sua foto em assets/avatar.png -->
+      <img class="avatar" src="assets/avatar.png" alt="DevPlayerSP" onerror="this.style.display='none'">
+      <h1>DevPlayerSP</h1>
+      <p class="bio">Games, código e lives. Me acompanhe em todas as redes 👇</p>
+    </header>
+
+    <nav id="links" class="links" aria-label="Canais"></nav>
+
+    <!-- Área de propagandas / parceiros. Fica escondida enquanto a lista ADS estiver vazia. -->
+    <section id="ads" class="ads" hidden>
+      <h2>Parceiros</h2>
+      <div id="ads-list" class="ads-list"></div>
+    </section>
+
+    <footer>© <span id="year"></span> DevPlayerSP</footer>
+  </main>
+
+  <script>
+    // ====== EDITE AQUI ======
+    // icon = nome do ícone em https://simpleicons.org
+    const LINKS = [
+      { label: "YouTube",   url: "https://www.youtube.com/@devplayersp",   icon: "youtube",   color: "#FF0000" },
+      { label: "Twitch",    url: "https://www.twitch.tv/devplayersp",      icon: "twitch",    color: "#9146FF" },
+      { label: "TikTok",    url: "https://www.tiktok.com/@devplayersp",    icon: "tiktok",    color: "#25F4EE" },
+      { label: "Instagram", url: "https://www.instagram.com/devplayersp",  icon: "instagram", color: "#E4405F" },
+      { label: "Threads",   url: "https://www.threads.net/@devplayersp",   icon: "threads",   color: "#FFFFFF" },
+    ];
+
+    // Propagandas: deixe vazio para esconder a seção.
+    // Exemplo: { title: "Loja X", text: "10% off com o cupom DEV", url: "https://...", image: "assets/ads/lojax.png" }
+    const ADS = [];
+    // ========================
+
+    const ICON_CDN = "https://cdn.jsdelivr.net/npm/simple-icons@11.0.0/icons/";
+
+    const linksEl = document.getElementById("links");
+    for (const l of LINKS) {
+      const a = document.createElement("a");
+      a.className = "link";
+      a.href = l.url;
+      a.target = "_blank";
+      a.rel = "noopener";
+      a.style.setProperty("--brand", l.color);
+      a.innerHTML = `<span class="icon" style="--icon:url('${ICON_CDN}${l.icon}.svg')"></span><span>${l.label}</span>`;
+      linksEl.appendChild(a);
+    }
+
+    if (ADS.length) {
+      const list = document.getElementById("ads-list");
+      for (const ad of ADS) {
+        const a = document.createElement("a");
+        a.className = "ad";
+        a.href = ad.url;
+        a.target = "_blank";
+        a.rel = "noopener sponsored";
+        a.innerHTML = `${ad.image ? `<img src="${ad.image}" alt="">` : ""}<div><strong>${ad.title}</strong><small>${ad.text || ""}</small></div>`;
+        list.appendChild(a);
+      }
+      document.getElementById("ads").hidden = false;
+    }
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
