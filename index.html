@@ -4,18 +4,27 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>DevPlayerSP</title>
-  <meta name="description" content="Todos os canais do DevPlayerSP: YouTube, Twitch, TikTok, Instagram e Threads.">
+  <meta name="description" content="Games, lives e gameplay. Todos os canais do DevPlayerSP: YouTube, Twitch, TikTok, Instagram e Threads.">
+  <meta name="theme-color" content="#111116">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://devplayersp.github.io/">
   <meta property="og:title" content="DevPlayerSP">
-  <meta property="og:description" content="Todos os canais do DevPlayerSP em um só lugar.">
+  <meta property="og:description" content="Games, lives e gameplay. Todos os canais em um só lugar.">
+  <meta property="og:image" content="https://devplayersp.github.io/assets/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Montserrat:ital,wght@0,700;1,800;1,900&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main class="container">
-    <header class="profile">
-      <!-- Coloque sua foto em assets/avatar.png -->
-      <img class="avatar" src="assets/avatar.png" alt="DevPlayerSP" onerror="this.style.display='none'">
-      <h1>DevPlayerSP</h1>
-      <p class="bio">Games, código e lives. Me acompanhe em todas as redes 👇</p>
+    <header class="hero">
+      <h1 class="sr-only">DevPlayerSP</h1>
+      <img class="banner" src="assets/banner.jpg" alt="DEV PLAYER SP" width="1600" height="533">
+      <p class="tagline">Games <span>/</span> Lives <span>/</span> Gameplay</p>
     </header>
 
     <nav id="links" class="links" aria-label="Canais"></nav>
@@ -33,11 +42,11 @@
     // ====== EDITE AQUI ======
     // icon = nome do ícone em https://simpleicons.org
     const LINKS = [
-      { label: "YouTube",   url: "https://www.youtube.com/@devplayersp",   icon: "youtube",   color: "#FF0000" },
-      { label: "Twitch",    url: "https://www.twitch.tv/devplayersp",      icon: "twitch",    color: "#9146FF" },
-      { label: "TikTok",    url: "https://www.tiktok.com/@devplayersp",    icon: "tiktok",    color: "#25F4EE" },
-      { label: "Instagram", url: "https://www.instagram.com/devplayersp",  icon: "instagram", color: "#E4405F" },
-      { label: "Threads",   url: "https://www.threads.net/@devplayersp",   icon: "threads",   color: "#FFFFFF" },
+      { label: "YouTube",   url: "https://www.youtube.com/@devplayersp",  icon: "youtube" },
+      { label: "Twitch",    url: "https://www.twitch.tv/devplayersp",     icon: "twitch" },
+      { label: "TikTok",    url: "https://www.tiktok.com/@devplayersp",   icon: "tiktok" },
+      { label: "Instagram", url: "https://www.instagram.com/devplayersp", icon: "instagram" },
+      { label: "Threads",   url: "https://www.threads.net/@devplayersp",  icon: "threads" },
     ];
 
     // Propagandas: deixe vazio para esconder a seção.
@@ -48,16 +57,16 @@
     const ICON_CDN = "https://cdn.jsdelivr.net/npm/simple-icons@11.0.0/icons/";
 
     const linksEl = document.getElementById("links");
-    for (const l of LINKS) {
+    LINKS.forEach((l, i) => {
       const a = document.createElement("a");
       a.className = "link";
+      a.style.setProperty("--i", i);
       a.href = l.url;
       a.target = "_blank";
       a.rel = "noopener";
-      a.style.setProperty("--brand", l.color);
-      a.innerHTML = `<span class="icon" style="--icon:url('${ICON_CDN}${l.icon}.svg')"></span><span>${l.label}</span>`;
+      a.innerHTML = `<span class="icon" style="--icon:url('${ICON_CDN}${l.icon}.svg')"></span><span class="label">${l.label}</span><span class="arrow" aria-hidden="true">›</span>`;
       linksEl.appendChild(a);
-    }
+    });
 
     if (ADS.length) {
       const list = document.getElementById("ads-list");
